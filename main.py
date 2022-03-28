@@ -73,7 +73,7 @@ dTotal = testing[-1][2]
 dRenewable = testing[-1][3]
 dPercent = percent(dRenewable, dTotal)
 
-# api.update_status(dPercent+" of electricity generated in the U.S. was renewable on {:%B %d, %Y}".format(date.today() - timedelta(1))+'.')
+api.update_status(dPercent+" of electricity generated in the U.S. was renewable on {:%B %d, %Y}".format(date.today() - timedelta(1))+'.')
 
 with open('yesterday.txt', 'w') as f:
     f.write(recent)
