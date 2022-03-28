@@ -1,7 +1,6 @@
 # from functools import total_ordering
 import requests # allows access web resources
 # from bs4 import BeautifulSoup # allows parse the web information
-# import pandas as pd
 from datetime import date, timedelta
 import database
 import tweepy
@@ -77,8 +76,6 @@ api.update_status(dPercent+" of electricity generated in the U.S. was renewable 
 
 with open('yesterday.txt', 'w') as f:
     f.write(recent)
-
-
 
 # get date index, to get data with same index, then add that together for total fuel generated that day.
 # actually just get last index and add it to memory.
