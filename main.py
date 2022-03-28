@@ -62,15 +62,18 @@ newDate = (date.today() - timedelta(1)).strftime("%m/%d/%Y")
 
 if(newDate != oldDate):
     database.add_value(connection, recent, dayTotal, dayRenewable, pDayTotal, pDayRenewable)
-
+# database.delete_by_id(connection, 3, 4)
 def percent(num, den):
     return ('{:0.2f}%').format((num/den)*100)
 
 testing = database.get_all(connection)
+# for test in testing:
+#     print(test)
 dTotal = testing[-1][2]
 dRenewable = testing[-1][3]
 dPercent = percent(dRenewable, dTotal)
 
+# tweets value
 api.update_status(dPercent+" of electricity generated in the U.S. was renewable on {:%B %d, %Y}".format(date.today() - timedelta(1))+'.')
 
 with open('yesterday.txt', 'w') as f:
