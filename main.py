@@ -62,8 +62,11 @@ for fuel in refined:
 # not sure what this is for
 recent = refined["Coal"]["DATES"][-1]
 oldest = refined["Coal"]["DATES"][0]
+oldDate = open('yesterday.txt', 'r').read()
+newDate = (date.today() - timedelta(1)).strftime("%m/%d/%Y")
 
-# database.add_value(connection, recent, dayTotal, dayRenewable, pDayTotal, pDayRenewable)
+if(newDate != oldDate):
+    database.add_value(connection, recent, dayTotal, dayRenewable, pDayTotal, pDayRenewable)
 
 def percent(num, den):
     return ('{:0.2f}%').format((num/den)*100)
@@ -73,10 +76,11 @@ dTotal = testing[-1][2]
 dRenewable = testing[-1][3]
 dPercent = percent(dRenewable, dTotal)
 
-api.update_status(dPercent+" of electricity generated in the U.S. was renewable on {:%B %d, %Y}".format(date.today() - timedelta(1)))
+api.update_status(dPercent+" of electricity generated in the U.S. was renewable on {:%B %d, %Y}".format(date.today() - timedelta(1))+'.')
 
+with open('yesterday.txt', 'w') as f:
+    f.write(recent)
 
-# still have to get it to tweet, and have it run in intervals, then it's done.
 
 
 # get date index, to get data with same index, then add that together for total fuel generated that day.
