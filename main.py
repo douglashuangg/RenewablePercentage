@@ -4,12 +4,11 @@ import requests # allows access web resources
 from datetime import date, timedelta
 import database
 import tweepy
-import config
+import os
 
 # tweeting
-
 auth = tweepy.OAuth1UserHandler(
-   config.consumer_key, config.consumer_secret, config.access_token, config.access_token_secret
+   os.environ.get('consumer_key'), os.environ.get('consumer_secret'), os.environ.get('access_token'), os.environ.get('access_token_secret')
 )
 
 api = tweepy.API(auth)
