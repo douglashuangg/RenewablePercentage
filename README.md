@@ -7,6 +7,10 @@ Uses data from the U.S. Energy Information Adminstration (eia.gov).
 ## Access the Twitter bot here:
 https://twitter.com/Energy_Percent
 
+## Stack
+- Deployed using Heroku
+- Built using Python and SQLite database
+
 ## Problems I ran into
 
 ## Next steps
