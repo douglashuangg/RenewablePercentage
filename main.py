@@ -88,7 +88,6 @@ with open('yesterday.txt', 'w') as f:
 
 # print(result.status_code)
 
-
 # result = requests.get('https://www.eia.gov/electricity/gridmonitor/dashboard/custom/pending')
 # src = result.content
 # soup = BeautifulSoup(src, 'html.parser')
