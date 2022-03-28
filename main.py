@@ -1,9 +1,22 @@
-from functools import total_ordering
+# from functools import total_ordering
 import requests # allows access web resources
-from bs4 import BeautifulSoup # allows parse the web information
-import pandas as pd
+# from bs4 import BeautifulSoup # allows parse the web information
+# import pandas as pd
 from datetime import date, timedelta
 import database
+import tweepy
+
+# tweeting
+consumer_key = 'bp7AAnvXcriC78pgJF0NXegRz'
+consumer_secret = '9LZNkLl6ZraKVlRfXK7Iu1p0luMXv7yAOmFuXvade2lpq0kENI'
+access_token = '1508205576710459400-SwD0WIwSKkBLJgNCGxM55OuwS5HzeU'
+access_token_secret = 'R1E4iM3fODwOste71plrfXXJqgUedk45xCc4HprfJDEd2'
+
+auth = tweepy.OAuth1UserHandler(
+   consumer_key, consumer_secret, access_token, access_token_secret
+)
+
+api = tweepy.API(auth)
 
 # database connection
 connection = database.connect()
@@ -14,8 +27,6 @@ yesterday = date.today() - timedelta(1)
 yearAgo = date.today() - timedelta(366)
 yesterday = yesterday.strftime("%m%d%Y")
 yearAgo = yearAgo.strftime("%m%d%Y")
-# print(yesterday)
-# print(yearAgo)
 
 # I can just change the date here manually. And then set interval to scrape data.
 URL = f'https://www.eia.gov/electricity/930-api/region_data_by_fuel_type/series_data?type[0]=NG&respondent[0]=US48&start={yearAgo}%2000:00:00&end={yesterday}%2023:59:59&frequency=daily&timezone=Eastern&series=undefined'
@@ -48,24 +59,25 @@ for fuel in refined:
         dayRenewable += refined[fuel]['DATA'][-1]
         pDayRenewable += refined[fuel]['DATA'][0]
 
+# not sure what this is for
 recent = refined["Coal"]["DATES"][-1]
 oldest = refined["Coal"]["DATES"][0]
+
 # database.add_value(connection, recent, dayTotal, dayRenewable, pDayTotal, pDayRenewable)
 
-#energies = database.get_all(connection)
-#for energy in energies:
-    #print(energy)
-testing = database.get_by_date(connection, '03/25/2022', '03/25/2022')
-for test in testing:
-    print(test)
+def percent(num, den):
+    return ('{:0.2f}%').format((num/den)*100)
+
+testing = database.get_all(connection)
+dTotal = testing[-1][2]
+dRenewable = testing[-1][3]
+dPercent = percent(dRenewable, dTotal)
+
+api.update_status(dPercent+" of electricity generated in the U.S. was renewable on {:%B %d, %Y}".format(date.today() - timedelta(1)))
+
 
 # still have to get it to tweet, and have it run in intervals, then it's done.
 
-# total += dayTotal
-# renewable += dayRenewable
-# pTotal += pDayTotal
-# pRenewable += pDayRenewable 
-# print(total)
 
 # get date index, to get data with same index, then add that together for total fuel generated that day.
 # actually just get last index and add it to memory.
