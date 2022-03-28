@@ -5,15 +5,12 @@ import requests # allows access web resources
 from datetime import date, timedelta
 import database
 import tweepy
+import config
 
 # tweeting
-consumer_key = 'bp7AAnvXcriC78pgJF0NXegRz'
-consumer_secret = '9LZNkLl6ZraKVlRfXK7Iu1p0luMXv7yAOmFuXvade2lpq0kENI'
-access_token = '1508205576710459400-SwD0WIwSKkBLJgNCGxM55OuwS5HzeU'
-access_token_secret = 'R1E4iM3fODwOste71plrfXXJqgUedk45xCc4HprfJDEd2'
 
 auth = tweepy.OAuth1UserHandler(
-   consumer_key, consumer_secret, access_token, access_token_secret
+   config.consumer_key, config.consumer_secret, config.access_token, config.access_token_secret
 )
 
 api = tweepy.API(auth)
@@ -76,7 +73,7 @@ dTotal = testing[-1][2]
 dRenewable = testing[-1][3]
 dPercent = percent(dRenewable, dTotal)
 
-api.update_status(dPercent+" of electricity generated in the U.S. was renewable on {:%B %d, %Y}".format(date.today() - timedelta(1))+'.')
+# api.update_status(dPercent+" of electricity generated in the U.S. was renewable on {:%B %d, %Y}".format(date.today() - timedelta(1))+'.')
 
 with open('yesterday.txt', 'w') as f:
     f.write(recent)
