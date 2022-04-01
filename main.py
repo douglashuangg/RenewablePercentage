@@ -64,17 +64,25 @@ if(newDate != oldDate):
     database.add_value(connection, recent, dayTotal, dayRenewable, pDayTotal, pDayRenewable)
 # database.delete_by_id(connection, 3, 4)
 def percent(num, den):
-    return ('{:0.2f}%').format((num/den)*100)
+    return round((num/den)*100, 1)
 
 testing = database.get_all(connection)
 # for test in testing:
-#     print(test)
+    # print(test)
 dTotal = testing[-1][2]
 dRenewable = testing[-1][3]
+pTotal = testing[-1][4]
+pRenewable = testing[-1][5]
 dPercent = percent(dRenewable, dTotal)
+pPercent = percent(pRenewable, pTotal)
+difference = round(dPercent - pPercent, 3)
+yesterdayA = (date.today() - timedelta(1)).strftime("%B %d, %Y")
 
 # tweets value
-api.update_status(dPercent+" of electricity generated in the U.S. was renewable on {:%B %d, %Y}".format(date.today() - timedelta(1))+'.')
+if(difference >= 0):
+    api.update_status("{dPercent}% of electricity generated in the U.S. was renewable on {yesterdayA}, up {difference}% ({pPercent}%) same time last year.".format(dPercent=dPercent, yesterdayA=yesterdayA, difference=difference, pPercent=pPercent))
+else:
+    api.update_status("{dPercent}% of electricity generated in the U.S. was renewable on {yesterdayA}, down {difference}% ({pPercent}%) same time last year.".format(dPercent=dPercent, yesterdayA=yesterdayA, difference=difference, pPercent=pPercent))
 
 with open('yesterday.txt', 'w') as f:
     f.write(recent)
