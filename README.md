@@ -14,3 +14,5 @@ https://twitter.com/Energy_Percent
 ## Problems I ran into
 
 ## Next steps
+- Currently only displays daily percentages
+- Incorporate monthly percentages and percent change from the past
