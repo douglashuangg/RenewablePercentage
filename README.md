@@ -1,9 +1,10 @@
 # RenewablePercentage ⚡
 
 Twitter bot that calculates the percentage of energy is generated renewably each month in the United States and projects the estimated end of year percentage. 
-![image](https://user-images.githubusercontent.com/74084786/202366402-7ddf3874-a6af-42f6-985f-2454b806e7b9.png)
 
 Uses data from the U.S. Energy Information Adminstration (eia.gov).
+
+![image](https://user-images.githubusercontent.com/74084786/202366402-7ddf3874-a6af-42f6-985f-2454b806e7b9.png)
 
 ## Access the Twitter bot here:
 https://twitter.com/Energy_Percent
